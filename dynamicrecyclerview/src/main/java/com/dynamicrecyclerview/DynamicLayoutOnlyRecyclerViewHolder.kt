@@ -1,4 +1,4 @@
-package com.ingemark.dynamicrecyclerview
+package com.dynamicrecyclerview
 
 
 import androidx.databinding.ViewDataBinding

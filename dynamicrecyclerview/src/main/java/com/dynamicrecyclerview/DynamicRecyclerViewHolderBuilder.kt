@@ -1,4 +1,4 @@
-package com.ingemark.dynamicrecyclerview
+package com.dynamicrecyclerview
 
 
 class DynamicRecyclerViewHolderBuilder {
