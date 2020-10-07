@@ -1,6 +1,6 @@
 # USAGE
 
-class ViewHolder(dataBinding: ViewDataBinding) : DynamicRecyclerViewHolder(dataBinding) {
+{class ViewHolder(dataBinding: ViewDataBinding) : DynamicRecyclerViewHolder(dataBinding) {
 
     private val binding = dataBinding as ViewHolderBinding
     private lateinit var data: HolderData
@@ -15,8 +15,8 @@ class ViewHolder(dataBinding: ViewDataBinding) : DynamicRecyclerViewHolder(dataB
         data = item as FavoriteViewHolderData
         binding.holder = this
     }
-}
+}}
 
-adapter().appendViewHolder(DynamicRecyclerViewHolderBuilder(
+{adapter().appendViewHolder(DynamicRecyclerViewHolderBuilder(
                     ViewHolder.ViewHolderData(
-                            object, viewModel), ViewHolder::class.java))
+                            object, viewModel), ViewHolder::class.java))}
