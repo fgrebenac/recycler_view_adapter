@@ -1,10 +1,10 @@
-package com.dynamicrecyclerview
+package com.recyclerviewadapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 
-open class DynamicRecyclerViewHolder(dataBinding: ViewDataBinding) : RecyclerView.ViewHolder(dataBinding.root) {
+open class RecyclerViewHolder(dataBinding: ViewDataBinding) : RecyclerView.ViewHolder(dataBinding.root) {
 
     lateinit var context: Context
     var item: Any? = null

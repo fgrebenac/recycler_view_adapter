@@ -1,20 +1,20 @@
-package com.dynamicrecyclerview
+package com.recyclerviewadapter
 
 import android.content.Context
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import java.util.regex.Pattern
 
-class DynamicRecyclerViewAdapter(private val context: Context, private val previewLength: Int = 0) : RecyclerView.Adapter<DynamicRecyclerViewHolder>() {
+class RecyclerViewAdapter(private val context: Context, private val previewLength: Int = 0) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
-    private var itemList: MutableList<DynamicRecyclerViewHolderBuilder> = ArrayList()
+    private var itemList: MutableList<ViewHolderBuilder> = ArrayList()
     private var singleTypeHolderEnabled = false
 
-    fun changeDataSet(itemList: MutableList<DynamicRecyclerViewHolderBuilder>) {
+    fun changeDataSet(itemList: MutableList<ViewHolderBuilder>) {
         this.itemList = itemList
         notifyDataSetChanged()
     }
@@ -25,12 +25,12 @@ class DynamicRecyclerViewAdapter(private val context: Context, private val previ
         notifyItemRangeRemoved(0, previousSize)
     }
 
-    fun insertViewHolderAt(viewHolderItem: DynamicRecyclerViewHolderBuilder, position: Int) {
+    fun insertViewHolderAt(viewHolderItem: ViewHolderBuilder, position: Int) {
         itemList.add(position, viewHolderItem)
         notifyItemInserted(position)
     }
 
-    fun appendViewHolder(viewHolderItem: DynamicRecyclerViewHolderBuilder) {
+    fun appendViewHolder(viewHolderItem: ViewHolderBuilder) {
         itemList.add(viewHolderItem)
         notifyItemInserted(itemList.size - 1)
     }
@@ -51,13 +51,13 @@ class DynamicRecyclerViewAdapter(private val context: Context, private val previ
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): DynamicRecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerViewHolder {
         val item = itemList[position]
         return getRecyclerViewHolder(parent, item)
     }
 
-    private fun getRecyclerViewHolder(parent: ViewGroup, item: DynamicRecyclerViewHolderBuilder): DynamicRecyclerViewHolder {
-        var recyclerViewHolder: DynamicRecyclerViewHolder? = null
+    private fun getRecyclerViewHolder(parent: ViewGroup, item: ViewHolderBuilder): RecyclerViewHolder {
+        var recyclerViewHolder: RecyclerViewHolder? = null
         val layoutInflater = LayoutInflater.from(parent.context)
         val dataBinding: ViewDataBinding?
         if (item.viewHolderClass != null && item.item != null)
@@ -65,14 +65,14 @@ class DynamicRecyclerViewAdapter(private val context: Context, private val previ
                 val layoutName = getLayoutName(item.viewHolderClass)
                 val layoutId = context.resources.getIdentifier(layoutName, "layout", context.packageName)
                 dataBinding = DataBindingUtil.inflate(layoutInflater, layoutId, parent, false)
-                recyclerViewHolder = Class.forName(item.viewHolderClass?.name!!).getConstructor(ViewDataBinding::class.java).newInstance(dataBinding) as DynamicRecyclerViewHolder
+                recyclerViewHolder = Class.forName(item.viewHolderClass?.name!!).getConstructor(ViewDataBinding::class.java).newInstance(dataBinding) as RecyclerViewHolder
             } catch (e: Exception) {
                 Log.e(this.javaClass.name, "Cannot find view holder layout pair for " + item.viewHolderClass?.simpleName + ". Create a layout with the same name to accompany the view holder class.")
             }
         else
             try {
                 dataBinding = DataBindingUtil.inflate(layoutInflater, item.itemLayoutId, parent, false)
-                recyclerViewHolder = DynamicLayoutOnlyRecyclerViewHolder(dataBinding) // instantiate blank holder (layout only)
+                recyclerViewHolder = LayoutOnlyRecyclerViewHolder(dataBinding) // instantiate blank holder (layout only)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -92,8 +92,8 @@ class DynamicRecyclerViewAdapter(private val context: Context, private val previ
         return buffer.toString()
     }
 
-    override fun onBindViewHolder(holder: DynamicRecyclerViewHolder, position: Int) {
-        holder.onBind(context, itemList.get(position).item)
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        holder.onBind(context, itemList[position].item)
     }
 
     override fun getItemCount(): Int {

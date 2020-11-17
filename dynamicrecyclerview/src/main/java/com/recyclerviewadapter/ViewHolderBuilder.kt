@@ -1,7 +1,7 @@
-package com.dynamicrecyclerview
+package com.recyclerviewadapter
 
 
-class DynamicRecyclerViewHolderBuilder {
+class ViewHolderBuilder {
 
     internal var item: Any? = null
     internal var viewHolderClass: Class<*>? = null
