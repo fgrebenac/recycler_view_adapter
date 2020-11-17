@@ -58,6 +58,7 @@ override fun onCreate() {
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            // set layout manager and orientation, can be done in code also
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical" />
 ```
