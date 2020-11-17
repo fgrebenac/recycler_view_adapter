@@ -40,7 +40,7 @@ view_holder.xml
 ```
 # In activity/fragment class
 ```
-private var adapter = binding.recyclerView.adapter as RecyclerViewAdapter
+private fun adapter() = binding.recyclerView.adapter as RecyclerViewAdapter
 
 override fun onCreate() {
     binding.recyclerView.adapter = RecyclerViewAdapter(context)
